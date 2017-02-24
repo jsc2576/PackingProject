@@ -7,40 +7,41 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
-<!--
-    <Button
+    <!--
+<Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btn"/>
-    -->
+
+                <hiruashi.jsc5565.packingproject.Packing.PackRecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/listview"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
+            -->
+
 
     <!--
-        <com.example.jsc55.packingview.PackRecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/listview"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"></com.example.jsc55.packingview.PackRecyclerView>
-
-
     <com.example.jsc55.packingview.PackViewPager
         android:layout_width="5dp"
         android:layout_height="5dp"
         android:id="@+id/viewpager"/>
-
-    <com.example.jsc55.packingview.PackExpandableListView
+-->
+    <hiruashi.jsc5565.packingproject.Packing.PackExpandableListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/packlistview"></com.example.jsc55.packingview.PackExpandableListView>
-    -->
+        android:id="@+id/packlistview"/>
+
+
+
     <!--
+    <hiruashi.jsc5565.packingproject.Packing.PackCustomListView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/listview"/>
 
-    <com.example.jsc55.packingview.PackCustomListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/listview"></com.example.jsc55.packingview.PackCustomListView>
-
-    <com.example.jsc55.packingview.PackTableView
+<com.example.jsc55.packingview.PackTableView
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="#000000"/>
@@ -51,13 +52,14 @@
         android:layout_height="match_parent"
         android:background="#550000"
         android:id="@+id/tableview"></com.example.jsc55.packingview.PackGridView>
-    -->
 
-    <hiruashi.jsc5565.packingproject.PackGridView
+    <hiruashi.jsc5565.packingproject.PackingView.PackGridView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/gridview"
         android:columnWidth="100dp"
+
         android:numColumns="auto_fit"
         />
+    -->
 </RelativeLayout>

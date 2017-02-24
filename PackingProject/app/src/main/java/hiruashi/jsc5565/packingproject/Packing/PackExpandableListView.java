@@ -1,38 +1,50 @@
-package hiruashi.jsc5565.packingproject;
+package hiruashi.jsc5565.packingproject.Packing;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import hiruashi.jsc5565.packingproject.util.AnimationUtil;
+import hiruashi.jsc5565.packingproject.util.ExpandableGroup;
+import hiruashi.jsc5565.packingproject.util.PackListItem;
+import hiruashi.jsc5565.packingproject.util.ViewUtil;
 
 /**
- * Created by jsc55 on 2016-11-14.
+ * Created by 정수찬 (jung suchan) on 2016-11-14.
  */
 
 public class PackExpandableListView<T> extends ExpandableListView {
 
-    final static int TEXT = 0;
-    final static int IMAGE = 1;
-    final static int IMAGEURI = 2;
+
+    //================================================
+    //                  variables
+    //================================================
+
 
     private Context context;
     private PackExpandableAdpater adapter;
     private int Group_Layout, Child_Layout;
 
-    /*
-        constructors
-     */
+
+
+
+
+
+
+    //================================================
+    //                 constructor
+    //================================================
+
+
     public PackExpandableListView(Context context) {
         super(context);
         Init(context, 0, 0);
@@ -60,6 +72,17 @@ public class PackExpandableListView<T> extends ExpandableListView {
     }
 
 
+
+
+
+
+
+
+    //================================================
+    //                    init
+    //================================================
+
+
     /**
      * initialize
      * @param context
@@ -77,44 +100,15 @@ public class PackExpandableListView<T> extends ExpandableListView {
     }
 
 
-    /**
-     * add group
-     * @param data
-     */
-    public void addGroupItem(int index, T...data){
-        ExpandableGroup group = new ExpandableGroup(data);
-        adapter.addGroupItem(index, group);
-    }
 
 
-    /**
-     * add child in group
-     * @param GroupPosition
-     * @param data
-     */
-    public void addChildItem(int GroupPosition, int index, T...data){
-        ExpandableChild child = new ExpandableChild(data);
-        adapter.addChildItem(GroupPosition, index, child);
-    }
 
 
-    /**
-     * remove group item
-     * @param GroupPosition
-     */
-    public void removeGroupItem(int GroupPosition){
-        adapter.removeGroupItem(GroupPosition);
-    }
 
+    //================================================
+    //                base setting
+    //================================================
 
-    /**
-     * remove child item in group
-     * @param GroupPosition
-     * @param ChildPosition
-     */
-    public void removeChildItem(int GroupPosition, int ChildPosition){
-        adapter.removeChildItem(GroupPosition, ChildPosition);
-    }
 
     /**
      * set group layout
@@ -133,14 +127,6 @@ public class PackExpandableListView<T> extends ExpandableListView {
         adapter.setChildayout(Child_Layout);
     }
 
-
-    /**
-     * group size
-     * @return
-     */
-    public int GroupSize(){
-        return adapter.GroupData.size();
-    }
 
 
     /**
@@ -178,6 +164,76 @@ public class PackExpandableListView<T> extends ExpandableListView {
         adapter.setChildViewOrder(view);
     }
 
+
+
+
+
+
+
+    //================================================
+    //             control items
+    //================================================
+
+
+    /**
+     * add group
+     * @param data
+     */
+    public void addGroupItem(int index, T...data){
+        ExpandableGroup group = new ExpandableGroup(data);
+        adapter.addGroupItem(index, group);
+    }
+
+
+    /**
+     * add child in group
+     * @param GroupPosition
+     * @param data
+     */
+    public void addChildItem(int GroupPosition, int index, T...data){
+        PackListItem child = new PackListItem(data);
+        adapter.addChildItem(GroupPosition, index, child);
+    }
+
+
+    /**
+     * remove group item
+     * @param GroupPosition
+     */
+    public void removeGroupItem(int GroupPosition){
+        adapter.removeGroupItem(GroupPosition);
+    }
+
+
+    /**
+     * remove child item in group
+     * @param GroupPosition
+     * @param ChildPosition
+     */
+    public void removeChildItem(int GroupPosition, int ChildPosition){
+        adapter.removeChildItem(GroupPosition, ChildPosition);
+    }
+
+
+
+
+
+
+
+
+    //================================================
+    //                  get size
+    //================================================
+
+    /**
+     * group size
+     * @return
+     */
+    public int GroupSize(){
+        return adapter.GroupData.size();
+    }
+
+
     /**
      * child size
      * @param position
@@ -189,17 +245,71 @@ public class PackExpandableListView<T> extends ExpandableListView {
 
 
 
+
+
+
+    //================================================
+    //                  get size
+    //================================================
+    public void setGroupAddAnimation(int ani){}
+
+    public void setChildAddAnimation(int ani){}
+
+
+
+    public void setGroupRemoveAnimation(int ani){}
+
+    public void setChildRemoveAnimation(int ani){}
+
+
+
+    public void setGroupOverAnimation(int ani){}
+
+    public void setChildOverAnimation(int ani){}
+
+
+
+    public void setGroupUnderAnimation(int ani){}
+
+    public void setChildUnderAnimation(int ani){}
+
+
+
+
+
     /******************************************************************
-     * Pack Expandable adapter
+     *                  Pack Expandable adapter
      ******************************************************************/
+
+
     class PackExpandableAdpater extends BaseExpandableListAdapter{
 
-        Context context;
-        LayoutInflater inflater;
-        List<ExpandableGroup> GroupData;
-        List<Integer> Group_Layout_Id, Group_View_Order;
-        List<Integer> Child_Layout_Id, Child_View_Order;
-        int Group_Layout, Child_Layout;
+
+
+
+
+
+        //================================================
+        //                    variables
+        //================================================
+
+        private Context context;
+        private LayoutInflater inflater;
+        private ArrayList<ExpandableGroup> GroupData;
+        private ArrayList<Integer> Group_Layout_Id, Group_View_Order;
+        private ArrayList<Integer> Child_Layout_Id, Child_View_Order;
+        private int Group_Layout, Child_Layout;
+        private AnimationUtil group_AnimationUtil, child_AnimationUtil;
+        private AnimationUtil use_Group_Animation, use_Child_Animation;
+        private int childVisibleCount=0;
+
+
+
+
+
+        //================================================
+        //                 constructor
+        //================================================
 
         /**
          * contstructor
@@ -207,6 +317,8 @@ public class PackExpandableListView<T> extends ExpandableListView {
          */
         PackExpandableAdpater(Context context, int Group_Layout, int Child_Layout){
             this.context = context;
+            this.inflater = LayoutInflater.from(this.context);
+
             this.GroupData = new ArrayList<>();
 
             this.Group_Layout = Group_Layout;
@@ -217,8 +329,16 @@ public class PackExpandableListView<T> extends ExpandableListView {
 
             Child_Layout_Id = new ArrayList<Integer>();
             Child_View_Order = new ArrayList<Integer>();
+
+            group_AnimationUtil = new AnimationUtil(this.context);
+            child_AnimationUtil = new AnimationUtil(this.context);
         }
 
+
+
+        //================================================
+        //              adapter base setting
+        //================================================
 
         /**
          * get parent size
@@ -291,6 +411,21 @@ public class PackExpandableListView<T> extends ExpandableListView {
         }
 
 
+
+
+        @Override
+        public boolean isChildSelectable(int groupPosition, int childPosition) {
+            return true;
+        }
+
+
+
+
+
+        //================================================
+        //                  getview
+        //================================================
+
         /**
          * group view
          * @param groupPosition
@@ -302,36 +437,17 @@ public class PackExpandableListView<T> extends ExpandableListView {
         @Override
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
-            if(convertView == null){
-                inflater = (LayoutInflater)this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                if(Group_Layout == 0){
-                    convertView = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
-                    return convertView;
-                }
-                convertView = inflater.inflate(Group_Layout, parent, false);
-            }
+            View view = ViewUtil.getInstance().getView(this.context, groupPosition, convertView, parent, Group_Layout, inflater, GroupData, Group_Layout_Id, Group_View_Order);
 
-            ExpandableGroup Group_Item = GroupData.get(groupPosition);
+            Log.i("group Position", "group position: "+groupPosition+", first position: "+(getFirstVisiblePosition()+childVisibleCount)+", last position: "+getLastVisiblePosition());
+            group_AnimationUtil.ViewAnimation(view, groupPosition, getFirstVisiblePosition(), getLastVisiblePosition());
 
-            for(int i = 0; i<Group_Item.getItem().size(); i++){
-                if(Group_View_Order.get(i) == TEXT){
-                    TextView textview = (TextView)convertView.findViewById(Group_Layout_Id.get(i));
-                    textview.setText((String)Group_Item.getItem().get(i));
-                }
-
-                else if(Group_View_Order.get(i) == IMAGE){
-                    ImageView imageview = (ImageView)convertView.findViewById(Group_Layout_Id.get(i));
-                    imageview.setImageResource((int)Group_Item.getItem().get(i));
-                }
-
-                else if(Group_View_Order.get(i) == IMAGEURI){
-                    ImageView imageview = (ImageView)convertView.findViewById(Group_Layout_Id.get(i));
-                    imageview.setImageURI((Uri)Group_Item.getItem().get(i));
-                }
-            }
-
-            return convertView;
+            return view;
         }
+
+
+
+
 
 
         /**
@@ -346,40 +462,23 @@ public class PackExpandableListView<T> extends ExpandableListView {
         @Override
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-            if(convertView == null){
-                inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                if(Child_Layout == 0){
-                    convertView = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
-                    return convertView;
-                }
-                convertView = inflater.inflate(Child_Layout, parent, false);
+            View view = ViewUtil.getInstance().getView(this.context, childPosition, convertView, parent, Child_Layout, inflater, GroupData.get(groupPosition).getChildList(), Child_Layout_Id, Child_View_Order);
 
-            }
+            Log.i("Child Position", "group position: "+groupPosition+", child position: "+childPosition+", first position: "+getFirstVisiblePosition()+", last position: "+getLastVisiblePosition());
+            group_AnimationUtil.ViewAnimation(view, childPosition, getFirstVisiblePosition(), getLastVisiblePosition());
 
-            ExpandableChild Child_Item = GroupData.get(groupPosition).getChildItem(childPosition);
-
-            for(int i = 0; i<Child_Item.getItemList().size(); i++){
-
-                if(Child_View_Order.get(i) == TEXT){
-                    TextView textView = (TextView)convertView.findViewById(Child_Layout_Id.get(i));
-                    textView.setText((String)Child_Item.getItemList().get(i));
-                }
-                else if(Child_View_Order.get(i) == IMAGE){
-                    ImageView imageView = (ImageView)convertView.findViewById(Child_Layout_Id.get(i));
-                    imageView.setImageResource((int)Child_Item.getItemList().get(i));
-                }
-                else if(Child_View_Order.get(i) == IMAGEURI){
-                    ImageView imageView = (ImageView)convertView.findViewById(Child_Layout_Id.get(i));
-                    imageView.setImageURI((Uri)Child_Item.getItemList().get(i));
-                }
-            }
-            return convertView;
+            return view;
         }
 
-        @Override
-        public boolean isChildSelectable(int groupPosition, int childPosition) {
-            return true;
-        }
+
+
+
+
+
+        //================================================
+        //           base setting in listview
+        //================================================
+
 
 
         /**
@@ -443,6 +542,31 @@ public class PackExpandableListView<T> extends ExpandableListView {
 
 
         /**
+         * set group layout
+         * @param Group_Layout
+         */
+        public void setGroupLayout(int Group_Layout){
+            this.Group_Layout = Group_Layout;
+        }
+
+
+        /**
+         * set child layout
+         * @param Child_Layout
+         */
+        public void setChildayout(int Child_Layout){
+            this.Child_Layout = Child_Layout;
+        }
+
+
+
+
+
+        //================================================
+        //                control items
+        //================================================
+
+        /**
          * add group item
          * @param group
          */
@@ -456,7 +580,7 @@ public class PackExpandableListView<T> extends ExpandableListView {
          * @param groupPosition
          * @param child
          */
-        public void addChildItem(int groupPosition, int index, ExpandableChild child){
+        public void addChildItem(int groupPosition, int index, PackListItem child){
             GroupData.get(groupPosition).addChildItem(index, child);
         }
 
@@ -480,112 +604,63 @@ public class PackExpandableListView<T> extends ExpandableListView {
         }
 
 
-        /**
-         * set group layout
-         * @param Group_Layout
-         */
-        public void setGroupLayout(int Group_Layout){
-            this.Group_Layout = Group_Layout;
+
+        //================================================
+        //                set animation layout
+        //================================================
+
+        public void setGroupAddAnimation(int ani){
+            group_AnimationUtil.setAddAnimation(ani);
+        }
+
+
+        public void setChildAddAnimation(int ani){
+            child_AnimationUtil.setAddAnimation(ani);
+        }
+
+        public void setGroupRemoveAnimation(int ani){
+            group_AnimationUtil.setRemoveAnimation(ani);
+        }
+
+
+        public void setChildRemoveAnimation(int ani){
+            child_AnimationUtil.setRemoveAnimation(ani);
+        }
+
+
+        public void setGroupOverAnimation(int ani){
+            group_AnimationUtil.setOverAnimation(ani);
+        }
+
+        public void setChildOverAnimation(int ani){
+            child_AnimationUtil.setOverAnimation(ani);
+        }
+
+
+        public void setGroupUnderAnimation(int ani){
+            group_AnimationUtil.setUnderAnimation(ani);
+        }
+
+        public void setChildUnderAnimation(int ani){
+            child_AnimationUtil.setUnderAnimation(ani);
         }
 
 
         /**
-         * set child layout
-         * @param Child_Layout
+         *
+         * @param groupPosition
          */
-        public void setChildayout(int Child_Layout){
-            this.Child_Layout = Child_Layout;
-        }
-    }
 
-
-    /**************************************************
-     * expandable child class
-     * @param <T>
-     ***************************************************/
-    class ExpandableChild<T>{
-
-        private List<T> ChildData;
-
-        /**
-         * constructor
-         * @param data
-         */
-        ExpandableChild(T...data){
-            ChildData = new ArrayList<T>();
-
-            for(T d : data){
-                ChildData.add(d);
-            }
+        @Override
+        public void onGroupExpanded(int groupPosition) {
+            super.onGroupExpanded(groupPosition);
+            childVisibleCount+=getChildrenCount(groupPosition);
         }
 
-
-        /**
-         * get data
-         * @return
-         */
-        public List<T> getItemList(){
-            return ChildData;
-        }
-    }
-
-
-    /************************************************************
-     * Expandable parent class
-     *************************************************************/
-    class ExpandableGroup<T>{
-
-        private List<T> GroupData;
-        private List<ExpandableChild> ChildData;
-
-        /**
-         * constructor
-         * @param data
-         */
-        ExpandableGroup(T ... data){
-            GroupData = new ArrayList<T>();
-            ChildData = new ArrayList<ExpandableChild>();
-
-            for(T d : data){
-                GroupData.add(d);
-            }
-        }
-
-
-        /**
-         * get data
-         * @return
-         */
-        public List<T> getItem(){
-            return GroupData;
-        }
-
-
-        /**
-         * set child data
-         * @param child
-         */
-        public void addChildItem(int index, ExpandableChild child){
-            ChildData.add(index, child);
-        }
-
-
-        /**
-         * get child data array
-         * @return
-         */
-        public List<ExpandableChild> getChildList(){
-            return ChildData;
-        }
-
-
-        /**
-         * get a child data
-         * @param position
-         * @return
-         */
-        public ExpandableChild getChildItem(int position){
-            return ChildData.get(position);
+        @Override
+        public void onGroupCollapsed(int groupPosition) {
+            super.onGroupCollapsed(groupPosition);
+            childVisibleCount-=getChildrenCount(groupPosition);
         }
     }
 }

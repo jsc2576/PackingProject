@@ -1,42 +1,35 @@
-package hiruashi.jsc5565.packingproject;
+package hiruashi.jsc5565.packingproject.Packing;
 
 import android.content.Context;
-import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import hiruashi.jsc5565.packingproject.R;
+import hiruashi.jsc5565.packingproject.util.PackListItem;
+import hiruashi.jsc5565.packingproject.util.ViewUtil;
+
 /**
- * Created by jsc55 on 2016-11-17.
+ * Created by 정수찬 (jung suchan) on 2016-11-17.
  */
 
 public class PackRecyclerView<T> extends RecyclerView {
-
-    /*
-        view type
-     */
-    public final static int TEXT = 0;
-    public final static int IMAGE = 1;
-    public final static int IMAGEURI = 2;
 
     /*
         recycler list data
      */
     private int Layout;
     private PackRecyclerAdapter adapter;
+    private Context context;
 
     /**
      * constructor
@@ -44,28 +37,28 @@ public class PackRecyclerView<T> extends RecyclerView {
      */
     public PackRecyclerView(Context context) {
         super(context);
-        Init();
+        Init(context);
     }
 
     public PackRecyclerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        Init();
+        Init(context);
     }
 
     public PackRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        Init();
+        Init(context);
     }
 
 
     /**
      * Initialize recycler view
      */
-    private void Init(){
+    private void Init(Context context){
         Layout = 0;
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         this.setLayoutManager(mLayoutManager);
-        adapter = new PackRecyclerAdapter();
+        adapter = new PackRecyclerAdapter(context);
         this.setAdapter(adapter);
         this.setFocusable(true);
         this.setClickable(true);
@@ -114,7 +107,7 @@ public class PackRecyclerView<T> extends RecyclerView {
      * @param view
      */
     public void setViewOrder(int ... view){
-        adapter.setViewOrder(view);
+        adapter.setView_Order(view);
     }
 
     public int size(){
@@ -122,28 +115,23 @@ public class PackRecyclerView<T> extends RecyclerView {
     }
 
 
-    /**
-     * set onItemClickListener in adapter
-     * @param onItemClickListener
-     */
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
-        adapter.setOnItemClickListener(onItemClickListener);
-    }
 
     /**************************************************
      * pack recycler adapter
      ***************************************************/
-    class PackRecyclerAdapter<T> extends RecyclerView.Adapter<PackRecyclerAdapter<T>.PackViewHolder>{
-        private List<Integer> Layout_Id;
-        private List<Integer> ViewOrder;
-        private List<RecyclerItem> RecyclerList;
+    public class PackRecyclerAdapter<T> extends RecyclerView.Adapter<PackRecyclerAdapter<T>.PackViewHolder>{
+        private ArrayList<Integer> Layout_Id;
+        private ArrayList<Integer> View_Order;
+        private ArrayList<PackListItem> RecyclerList;
         private int Layout;
-        private OnItemClickListener mItemClickListenter;
+        private Context context;
+
+
 
         /****************************************
          * viewholder
          ***************************************/
-        class PackViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        public class PackViewHolder extends RecyclerView.ViewHolder{
             List<View> ViewData;
 
             public PackViewHolder(View itemView) {
@@ -153,7 +141,6 @@ public class PackRecyclerView<T> extends RecyclerView {
                 for(int i=0; i<Layout_Id.size(); i++){
                     ViewData.add(itemView.findViewById(Layout_Id.get(i)));
                 }
-                itemView.setOnClickListener(this);
             }
 
             /**
@@ -164,31 +151,23 @@ public class PackRecyclerView<T> extends RecyclerView {
                 return ViewData;
             }
 
-
-            /**
-             * use making onItemClickListener
-             * @param v
-             */
-            @Override
-            public void onClick(View v) {
-                if(mItemClickListenter != null)
-                    mItemClickListenter.ItemClick(getAdapterPosition(), v);
-            }
         }
 
         /***********************************
-         * viewholder
+         * end viewholder
          ***********************************/
+
 
 
         /**
          * constructor
          */
-        PackRecyclerAdapter(){
+        PackRecyclerAdapter(Context context){
             this.Layout = 0;
-            RecyclerList = new ArrayList<RecyclerItem>();
+            this.context = context;
+            RecyclerList = new ArrayList<PackListItem>();
             Layout_Id = new ArrayList<Integer>();
-            ViewOrder = new ArrayList<Integer>();
+            View_Order = new ArrayList<Integer>();
         }
 
 
@@ -217,9 +196,9 @@ public class PackRecyclerView<T> extends RecyclerView {
          * set view order
          * @param view
          */
-        public void setViewOrder(int ... view){
+        public void setView_Order(int ... view){
             for(int v : view){
-                ViewOrder.add(v);
+                View_Order.add(v);
             }
         }
 
@@ -229,7 +208,7 @@ public class PackRecyclerView<T> extends RecyclerView {
          * @param data
          */
         public void addItem(int index, T...data){
-            RecyclerList.add(index, new RecyclerItem(data));
+            RecyclerList.add(index, new PackListItem(data));
             this.notifyItemInserted(RecyclerList.size()-1);
 
         }
@@ -274,25 +253,14 @@ public class PackRecyclerView<T> extends RecyclerView {
         int lastposition=0;
         @Override
         public void onBindViewHolder(PackViewHolder holder, int position) {
-            RecyclerItem recyclerItem = RecyclerList.get(position);
 
-            for(int i=0; i<Layout_Id.size(); i++){
-                if(ViewOrder.get(i) == TEXT){
-                    ((TextView)holder.getViewData().get(i)).setText((String)recyclerItem.getListItem().get(i));
-                }
-                else if(ViewOrder.get(i) == IMAGE){
-                    ((ImageView)holder.getViewData().get(i)).setImageResource((int)recyclerItem.getListItem().get(i));
-                }
-                else if(ViewOrder.get(i)== IMAGEURI){
-                    ((ImageView)holder.getViewData().get(i)).setImageURI((Uri)recyclerItem.getListItem().get(i));
-                }
-            }
+            ViewUtil.getInstance().RecyclerViewBind(context, holder, position, RecyclerList, Layout_Id, View_Order);
+
 
             if(position > lastposition) {
-                Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.center_from_right);
-                for(int i=0; i<holder.getViewData().size(); i++) {
-                    holder.getViewData().get(i).startAnimation(animation);
-                }
+                Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.over_show);
+                holder.itemView.startAnimation(animation);
+
                 lastposition = position;
             }
         }
@@ -309,47 +277,6 @@ public class PackRecyclerView<T> extends RecyclerView {
             return RecyclerList.size();
         }
 
-
-        /**
-         * setOnItemClickListener in RecyclerView
-         * @param onItemClickListener
-         */
-        public void setOnItemClickListener(OnItemClickListener onItemClickListener){
-            this.mItemClickListenter = onItemClickListener;
-        }
     }
 
-    /**************************************************
-     * pack recycler adapter
-     ***************************************************/
-
-    /**L
-     * recycler view item class
-     * @param <T>
-     */
-    class RecyclerItem<T>{
-        private List<T> ListItem;
-        RecyclerItem(T...data){
-            ListItem = new ArrayList<T>();
-
-            for(T d : data){
-                ListItem.add(d);
-            }
-        }
-
-        /**
-         * get listitem
-         * @return
-         */
-        public List<T> getListItem(){
-            return ListItem;
-        }
-    }
-
-    /**
-     * interface OnItemClickListener in RecyclerView
-     */
-    public interface OnItemClickListener{
-        void ItemClick(int position, View itemView);
-    }
 }

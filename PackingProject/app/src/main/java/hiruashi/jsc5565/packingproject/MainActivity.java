@@ -5,13 +5,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
-import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import hiruashi.jsc5565.packingproject.Packing.PackCustomListView;
+import hiruashi.jsc5565.packingproject.Packing.PackExpandableListView;
+import hiruashi.jsc5565.packingproject.Packing.PackListView;
+import hiruashi.jsc5565.packingproject.Packing.PackPermissionActivity;
+import hiruashi.jsc5565.packingproject.Packing.PackRecyclerView;
+import hiruashi.jsc5565.packingproject.Packing.PackViewPager;
+
+import static hiruashi.jsc5565.packingproject.util.ViewUtil.IMAGE_RESOURCE;
+import static hiruashi.jsc5565.packingproject.util.ViewUtil.TEXT;
 
 /**
  * TODO 라이브러리로 만들때는 삭제해야한다
@@ -51,20 +55,20 @@ public class MainActivity extends PackPermissionActivity {
         //final PackCustomListView customListView = (PackCustomListView)findViewById(R.id.listview);
         customListView.setLayout(R.layout.list_item);
         customListView.setIdOrder(R.id.list_img, R.id.list_text);
-        customListView.setViewOrder(PackExpandableListView.IMAGE, PackExpandableListView.TEXT);
+        customListView.setViewOrder(IMAGE_RESOURCE, TEXT);
 
-        customListView.setAddAniamtion(R.anim.center_from_right);
+        customListView.setAddAniamtion(R.anim.over_show);
         customListView.setRemoveAnimation(R.anim.left_from_center, 400);
 
-
+        customListView.useAnimation(false);
         /*
             input data
          */
-        customListView.addItem(0, R.mipmap.ic_launcher, "test");
-        customListView.addItem(1, R.mipmap.ic_launcher, "test");
-        customListView.addItem(2, R.mipmap.ic_launcher, "test");
-        customListView.addItem(3, R.mipmap.ic_launcher, "test");
-        customListView.addItem(4, R.mipmap.ic_launcher, "test");
+        for(int i=0; i<300; i++) {
+            customListView.addItem(customListView.size(), R.mipmap.ic_launcher, "test "+i);
+
+        }
+
 
 
         customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -72,10 +76,10 @@ public class MainActivity extends PackPermissionActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 if(position == 0){
-                    customListView.removeItem(customListView.size()-1);
+                    customListView.removeItem(0);
                 }
                 else{
-                    customListView.addItem(customListView.size(), R.mipmap.ic_launcher, "add test");
+                    customListView.addItem(customListView.getLastVisiblePosition()-4, R.mipmap.ic_launcher, "add test");
                 }
 
             }
@@ -86,29 +90,24 @@ public class MainActivity extends PackPermissionActivity {
         /*
             packexpandablelistview instruction
          */
-        //PackExpandableListView listview = (PackExpandableListView)findViewById(R.id.packlistview);
-        PackExpandableListView listview = new PackExpandableListView(this);
+        PackExpandableListView listview = (PackExpandableListView)findViewById(R.id.packlistview);
+        //PackExpandableListView listview = new PackExpandableListView(this);
         listview.setGroupLayout(R.layout.list_item);
         listview.setChildLayout(R.layout.list_item);
         listview.setGroupIdOrder(R.id.list_img, R.id.list_text);
         listview.setChildIdOrder(R.id.list_img, R.id.list_text);
-        listview.setGroupViewOrder(PackExpandableListView.IMAGE, PackExpandableListView.TEXT);
-        listview.setChildViewOrder(PackExpandableListView.IMAGE, PackExpandableListView.TEXT);
+        listview.setGroupViewOrder(IMAGE_RESOURCE, TEXT);
+        listview.setChildViewOrder(IMAGE_RESOURCE, TEXT);
 
         /*
             input data
          */
-        listview.addGroupItem(listview.GroupSize(), R.mipmap.ic_launcher, "test");
-        listview.addChildItem(listview.GroupSize()-1, listview.ChildSize(listview.GroupSize()-1), 0, R.mipmap.ic_launcher, "child1");
-        listview.addChildItem(listview.GroupSize()-1, listview.ChildSize(listview.GroupSize()-1), 0, R.mipmap.ic_launcher, "child2");
-        listview.addGroupItem(listview.GroupSize(), R.mipmap.ic_launcher, "test");
-        listview.addGroupItem(listview.GroupSize(), R.mipmap.ic_launcher, "test");
-        listview.addGroupItem(listview.GroupSize(), R.mipmap.ic_launcher, "test");
-        listview.addGroupItem(listview.GroupSize(), R.mipmap.ic_launcher, "test");
-        listview.addChildItem(listview.GroupSize()-1, listview.ChildSize(listview.GroupSize()-1), 4, R.mipmap.ic_launcher, "child51");
-        listview.addChildItem(listview.GroupSize()-1, listview.ChildSize(listview.GroupSize()-1), 4, R.mipmap.ic_launcher, "child52");
-
-
+        for(int i=0; i<100; i++) {
+            listview.addGroupItem(listview.GroupSize(), R.mipmap.ic_launcher, "test");
+            listview.addChildItem(listview.GroupSize() - 1, listview.ChildSize(listview.GroupSize() - 1), R.mipmap.ic_launcher, "child"+i);
+            listview.addChildItem(listview.GroupSize() - 1, listview.ChildSize(listview.GroupSize() - 1), R.mipmap.ic_launcher, "child"+i+"..");
+            listview.addChildItem(listview.GroupSize() - 1, listview.ChildSize(listview.GroupSize() - 1), R.mipmap.ic_launcher, "child"+i+"....");
+        }
 
 
 
@@ -143,13 +142,14 @@ public class MainActivity extends PackPermissionActivity {
         final PackRecyclerView recylerView = new PackRecyclerView(this);
 
         recylerView.setLayout(R.layout.list_item);
-        recylerView.setViewOrder(PackRecyclerView.IMAGE, PackRecyclerView.TEXT);
+        recylerView.setViewOrder(IMAGE_RESOURCE, TEXT);
         recylerView.setIdOrder(R.id.list_img, R.id.list_text);
 
-        recylerView.addItem(recylerView.size(), R.mipmap.ic_launcher, "test");
-        recylerView.addItem(recylerView.size(), R.mipmap.ic_launcher, "test");
-        recylerView.addItem(recylerView.size(), R.mipmap.ic_launcher, "test");
-
+        for(int i=0; i<100; i++) {
+            recylerView.addItem(recylerView.size(), R.mipmap.ic_launcher, "test");
+            recylerView.addItem(recylerView.size(), R.mipmap.ic_launcher, "test");
+            recylerView.addItem(recylerView.size(), R.mipmap.ic_launcher, "test");
+        }
         recylerView.setClickable(true);
         recylerView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,11 +173,11 @@ public class MainActivity extends PackPermissionActivity {
 
 
 
-
+/*
         PackGridView gridView = (PackGridView)findViewById(R.id.gridview);
 
         gridView.setLayout(R.layout.list_item);
-        gridView.setViewOrder(PackRecyclerView.IMAGE, PackRecyclerView.TEXT);
+        gridView.setViewOrder(IMAGE, TEXT);
         gridView.setIdOrder(R.id.list_img, R.id.list_text);
 
         gridView.addItem(gridView.size(), R.mipmap.ic_launcher, "test1");
@@ -189,6 +189,12 @@ public class MainActivity extends PackPermissionActivity {
         gridView.addItem(gridView.size(), R.mipmap.ic_launcher, "test7");
         gridView.addItem(gridView.size(), R.mipmap.ic_launcher, "test8");
 
-
+        PackHttpTask httpTask = new PackHttpTask("http://www.melon.com/1234123");
+        try {
+            Log.i("HTTP", httpTask.execute().get());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+*/
     }
 }

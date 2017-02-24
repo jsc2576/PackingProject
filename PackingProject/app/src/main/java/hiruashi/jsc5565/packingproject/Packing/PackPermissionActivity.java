@@ -1,4 +1,4 @@
-package hiruashi.jsc5565.packingproject;
+package hiruashi.jsc5565.packingproject.Packing;
 
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -10,7 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
 /**
- * Created by jsc55 on 2016-11-14.
+ * Created by 정수찬 (jung suchan) on 2016-11-14.
  */
 
 /**

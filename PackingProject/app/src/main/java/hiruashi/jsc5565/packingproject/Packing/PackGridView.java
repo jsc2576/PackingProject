@@ -1,8 +1,7 @@
-package hiruashi.jsc5565.packingproject;
+package hiruashi.jsc5565.packingproject.Packing;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -10,24 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import hiruashi.jsc5565.packingproject.util.PackListItem;
+import hiruashi.jsc5565.packingproject.util.ViewUtil;
+
 /**
- * Created by jsc55 on 2016-12-22.
+ * Created by 정수찬 (jung suchan) on 2016-12-22.
  */
 
 public class PackGridView<T> extends GridView {
-
-    /*
-        data type
-    */
-    static final int TEXT = 0;
-    static final int IMAGE = 1;
-    static final int IMAGEURI = 2;
-
 
     /*
         private data
@@ -87,7 +79,7 @@ public class PackGridView<T> extends GridView {
      * @param view
      */
     public void setViewOrder(int...view){
-        adapter.setViewOrder(view);
+        adapter.setView_Order(view);
     }
 
 
@@ -107,7 +99,7 @@ public class PackGridView<T> extends GridView {
      * @param item
      */
     public void addItem(int index, T ...item){
-        GridViewItem gridViewItem = new GridViewItem(item);
+        PackListItem gridViewItem = new PackListItem(item);
         adapter.addItem(index, gridViewItem);
     }
 
@@ -136,8 +128,8 @@ public class PackGridView<T> extends GridView {
          */
         private int layout; // layout
         private Context context; //context
-        private ArrayList<Integer> Layout_Id, ViewOrder; //id, view order
-        private ArrayList<GridViewItem> gridViewItems; // item arraylist
+        private ArrayList<Integer> Layout_Id, View_Order; //id, view order
+        private ArrayList<PackListItem> gridViewItems; // item arraylist
         private LayoutInflater inflater; // inflater
 
 
@@ -152,8 +144,8 @@ public class PackGridView<T> extends GridView {
             this.inflater = LayoutInflater.from(this.context);
 
             Layout_Id = new ArrayList<Integer>();
-            ViewOrder = new ArrayList<Integer>();
-            gridViewItems = new ArrayList<GridViewItem>();
+            View_Order = new ArrayList<Integer>();
+            gridViewItems = new ArrayList<PackListItem>();
         }
 
         /**
@@ -196,45 +188,9 @@ public class PackGridView<T> extends GridView {
          */
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view = convertView;
 
 
-            /*
-                if layout don't set, layout sets simple layout. (If layout don't set, occur error in onCreate.)
-             */
-            if(layout == 0){
-                view = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
-            }
-            else{
-                view = inflater.inflate(this.layout, parent, false);
-            }
-
-
-            /*
-                get a item at position
-             */
-            GridViewItem item = gridViewItems.get(position);
-
-            for(int i=0; i<item.getItem().size(); i++){
-
-                // if imageview
-                if(ViewOrder.get(i) == IMAGE){
-                    ImageView imageview = (ImageView)view.findViewById(Layout_Id.get(i));
-                    imageview.setImageResource((int)item.getItem().get(i));
-                }
-
-                //if textview
-                else if(ViewOrder.get(i) == TEXT){
-                    TextView textView = (TextView)view.findViewById(Layout_Id.get(i));
-                    textView.setText((String)item.getItem().get(i));
-                }
-
-                //if imageview by url
-                else if(ViewOrder.get(i) == IMAGEURI){
-                    ImageView imageView = (ImageView)view.findViewById(Layout_Id.get(i));
-                    imageView.setImageURI((Uri)item.getItem().get(i));
-                }
-            }
+            View view = ViewUtil.getInstance().getView(this.context, position, convertView, parent, layout, inflater, gridViewItems, Layout_Id, View_Order);
 
             return view;
         }
@@ -264,9 +220,9 @@ public class PackGridView<T> extends GridView {
          * set view order
          * @param view
          */
-        public void setViewOrder(int ...view){
+        public void setView_Order(int ...view){
             for(int v: view){
-                ViewOrder.add(v);
+                View_Order.add(v);
             }
         }
 
@@ -276,7 +232,7 @@ public class PackGridView<T> extends GridView {
          * @param index
          * @param item
          */
-        public void addItem(int index, GridViewItem item){
+        public void addItem(int index, PackListItem item){
             gridViewItems.add(index, item);
         }
 
@@ -299,34 +255,4 @@ public class PackGridView<T> extends GridView {
         }
     }//end GridViewAdapter
 
-
-
-
-    /**
-     * GridView item
-     * @param <T>
-     */
-    private class GridViewItem<T>{
-        private ArrayList<T> item;
-
-        /**
-         * constructor, set item
-         * @param data
-         */
-        GridViewItem(T...data){
-            this.item = new ArrayList<T>();
-
-            for(T d : data){
-                item.add(d);
-            }
-        }
-
-        /**
-         * get item arraylist
-         * @return
-         */
-        public ArrayList<T> getItem(){
-            return item;
-        }
-    }//end GridViewItem
 }

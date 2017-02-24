@@ -1,4 +1,4 @@
-package hiruashi.jsc5565.packingproject;
+package hiruashi.jsc5565.packingproject.Packing;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 /**
- * Created by Jung suchan on 2016-10-29.
+ * Created by 정수찬 (jung suchan) on 2016-10-29.
  */
 
 public class PackListView extends ListView {
@@ -74,13 +74,8 @@ public class PackListView extends ListView {
      * @param position
      * @return
      */
-    public boolean removeItem(int position){
-        try {
-            adapter.remove(adapter.getItem(position));
-            return true;
-        }catch (Exception e){
-            return false;
-        }
+    public void removeItem(int position) throws Exception{
+        adapter.remove(adapter.getItem(position));
     }
 
     /**
@@ -88,40 +83,28 @@ public class PackListView extends ListView {
      * @param str
      * @return
      */
-    public boolean removeItem(String str){
-        try {
-            adapter.remove(str);
-            return true;
-        }catch (Exception e){
-            return false;
-        }
+    public void removeItem(String str) throws Exception{
+        adapter.remove(str);
     }
 
     /**
      * reset height
      * @return
      */
-    public boolean fixHeight(){
+    public void fixHeight() throws Exception{
         int listview_height = 0;
 
-        try {
-            for (int i = 0; i < adapter.getCount(); i++) {
-                View listitem = adapter.getView(i, null, this);
-                listitem.measure(0, 0);
-                listview_height += listitem.getMeasuredHeight();
-            }
-
-            final ViewGroup.LayoutParams params = this.getLayoutParams();
-            params.height = listview_height + this.getDividerHeight() * (adapter.getCount() - 1);
-
-            this.setLayoutParams(params);
-            this.deferNotifyDataSetChanged();
-
-            return true;
-
-        }catch(Exception e){
-            return false;
+        for (int i = 0; i < adapter.getCount(); i++) {
+            View listitem = adapter.getView(i, null, this);
+            listitem.measure(0, 0);
+            listview_height += listitem.getMeasuredHeight();
         }
+
+        final ViewGroup.LayoutParams params = this.getLayoutParams();
+        params.height = listview_height + this.getDividerHeight() * (adapter.getCount() - 1);
+
+        this.setLayoutParams(params);
+        this.deferNotifyDataSetChanged();
 
     }
 }

@@ -1,4 +1,4 @@
-package hiruashi.jsc5565.packingproject;
+package hiruashi.jsc5565.packingproject.Packing;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by jsc55 on 2016-11-15.
+ * Created by 정수찬 (jung suchan) on 2016-11-15.
  */
 
 public class PackViewPager extends ViewPager{
