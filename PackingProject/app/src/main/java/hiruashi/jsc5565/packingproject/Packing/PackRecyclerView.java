@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hiruashi.jsc5565.packingproject.R;
+import hiruashi.jsc5565.packingproject.util.AnimationUtil;
 import hiruashi.jsc5565.packingproject.util.PackListItem;
 import hiruashi.jsc5565.packingproject.util.ViewUtil;
 
@@ -130,6 +131,7 @@ public class PackRecyclerView<T> extends RecyclerView {
         private ArrayList<PackListItem> RecyclerList;
         private int Layout;
         private Context context;
+        private AnimationUtil animationUtil;
 
 
 
@@ -173,6 +175,7 @@ public class PackRecyclerView<T> extends RecyclerView {
             RecyclerList = new ArrayList<PackListItem>();
             Layout_Id = new ArrayList<Integer>();
             View_Order = new ArrayList<Integer>();
+            animationUtil = new AnimationUtil(context);
         }
 
 

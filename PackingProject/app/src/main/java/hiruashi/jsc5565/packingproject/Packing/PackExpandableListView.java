@@ -37,7 +37,6 @@ public class PackExpandableListView<T> extends ExpandableListView {
     //================================================
 
 
-    private Context context;
     private PackExpandableAdpater adapter;
     private int Group_Layout, Child_Layout;
 
@@ -97,7 +96,6 @@ public class PackExpandableListView<T> extends ExpandableListView {
      * @param Child_Layout
      */
     private void Init(Context context, int Group_Layout, int Child_Layout){
-        this.context = context;
         this.Group_Layout = Group_Layout;
         this.Child_Layout = Child_Layout;
 
@@ -262,8 +260,6 @@ public class PackExpandableListView<T> extends ExpandableListView {
         private ArrayList<Integer> Group_Layout_Id, Group_View_Order;
         private ArrayList<Integer> Child_Layout_Id, Child_View_Order;
         private int Group_Layout, Child_Layout;
-        private int childVisibleCount=0;
-        private int position=0;
 
 
 
@@ -290,7 +286,6 @@ public class PackExpandableListView<T> extends ExpandableListView {
 
             Child_Layout_Id = new ArrayList<Integer>();
             Child_View_Order = new ArrayList<Integer>();
-
         }
 
 
@@ -420,8 +415,6 @@ public class PackExpandableListView<T> extends ExpandableListView {
 
             View view = ViewUtil.getInstance().getView(this.context, childPosition, convertView, parent, Child_Layout, inflater, GroupData.get(groupPosition).getChildList(), Child_Layout_Id, Child_View_Order);
 
-            Animation animation = AnimationUtils.loadAnimation(this.context, R.anim.over_show);
-            startAnimation(animation);
             return view;
         }
 
@@ -522,6 +515,9 @@ public class PackExpandableListView<T> extends ExpandableListView {
         }
 
 
+
+
+
         /**
          * remove child item in group
          * @param GroupPosition
@@ -529,26 +525,6 @@ public class PackExpandableListView<T> extends ExpandableListView {
          */
         public void removeChildItem(final int GroupPosition, final int ChildPosition){
             GroupData.get(GroupPosition).getChildList().remove(ChildPosition);
-        }
-
-
-
-
-        /**
-         *
-         * @param groupPosition
-         */
-
-        @Override
-        public void onGroupExpanded(int groupPosition) {
-            super.onGroupExpanded(groupPosition);
-            childVisibleCount+=getChildrenCount(groupPosition);
-        }
-
-        @Override
-        public void onGroupCollapsed(int groupPosition) {
-            super.onGroupCollapsed(groupPosition);
-            childVisibleCount-=getChildrenCount(groupPosition);
         }
     }
 }
