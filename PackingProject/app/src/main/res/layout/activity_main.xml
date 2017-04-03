@@ -27,39 +27,26 @@
         android:layout_width="5dp"
         android:layout_height="5dp"
         android:id="@+id/viewpager"/>
--->
 
     <hiruashi.jsc5565.packingproject.Packing.PackExpandableListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/packlistview"/>
+-->
 
 
-    <!--
-
+<!--
     <hiruashi.jsc5565.packingproject.Packing.PackCustomListView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/listview"/>
-    <com.example.jsc55.packingview.PackTableView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="#000000"/>
-        -->
-    <!--
-    <com.example.jsc55.packingview.PackGridView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#550000"
-        android:id="@+id/tableview"></com.example.jsc55.packingview.PackGridView>
+-->
 
-    <hiruashi.jsc5565.packingproject.PackingView.PackGridView
+    <hiruashi.jsc5565.packingproject.Packing.PackGridView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/gridview"
-        android:columnWidth="100dp"
+        android:columnWidth="400dp"
+        android:numColumns="auto_fit"></hiruashi.jsc5565.packingproject.Packing.PackGridView>
 
-        android:numColumns="auto_fit"
-        />
-    -->
 </RelativeLayout>

@@ -96,7 +96,7 @@ public class AnimationUtil {
             visible_item_count = last_position - first_position;
         }
 
-        if(check_animation.size() <= 0){}
+        if(check_animation.size() < 0){}
         else if(check_animation.get(position) == ADD){
             if(add_show_animation != 0){
                 animation = AnimationUtils.loadAnimation(context, add_show_animation);

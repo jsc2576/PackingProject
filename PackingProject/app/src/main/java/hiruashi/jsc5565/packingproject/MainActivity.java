@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import hiruashi.jsc5565.packingproject.Packing.PackCustomListView;
 import hiruashi.jsc5565.packingproject.Packing.PackExpandableListView;
+import hiruashi.jsc5565.packingproject.Packing.PackGridView;
+import hiruashi.jsc5565.packingproject.Packing.PackHttpTask;
 import hiruashi.jsc5565.packingproject.Packing.PackListView;
 import hiruashi.jsc5565.packingproject.Packing.PackPermissionActivity;
 import hiruashi.jsc5565.packingproject.Packing.PackRecyclerView;
@@ -62,7 +64,7 @@ public class MainActivity extends PackPermissionActivity {
         customListView.setAddAniamtion(R.anim.over_show);
         customListView.setRemoveAnimation(R.anim.left_from_center, 400);
 
-        customListView.useAnimation(false);
+        customListView.useAnimation(true);
         /*
             input data
          */
@@ -92,8 +94,8 @@ public class MainActivity extends PackPermissionActivity {
         /*
             packexpandablelistview instruction
          */
-        PackExpandableListView listview = (PackExpandableListView)findViewById(R.id.packlistview);
-        //PackExpandableListView listview = new PackExpandableListView(this);
+        //PackExpandableListView listview = (PackExpandableListView)findViewById(R.id.packlistview);
+        PackExpandableListView listview = new PackExpandableListView(this);
         listview.setGroupLayout(R.layout.list_item);
         listview.setChildLayout(R.layout.list_item);
         listview.setGroupIdMatch(R.id.list_img, IMAGE_RESOURCE);
@@ -180,28 +182,32 @@ public class MainActivity extends PackPermissionActivity {
 
 
 
-/*
-        PackGridView gridView = (PackGridView)findViewById(R.id.gridview);
 
+        PackGridView gridView = (PackGridView)findViewById(R.id.gridview);
+        //PackGridView gridView = new PackGridView(this);
         gridView.setLayout(R.layout.list_item);
-        gridView.setViewOrder(IMAGE, TEXT);
+        gridView.setViewOrder(IMAGE_RESOURCE, TEXT);
         gridView.setIdOrder(R.id.list_img, R.id.list_text);
 
-        gridView.addItem(gridView.getCount(), R.mipmap.ic_launcher, "test1");
-        gridView.addItem(gridView.getCount(), R.mipmap.ic_launcher, "test2");
-        gridView.addItem(gridView.getCount(), R.mipmap.ic_launcher, "test3");
-        gridView.addItem(gridView.getCount(), R.mipmap.ic_launcher, "test4");
-        gridView.addItem(gridView.getCount(), R.mipmap.ic_launcher, "test5");
-        gridView.addItem(gridView.getCount(), R.mipmap.ic_launcher, "test6");
-        gridView.addItem(gridView.getCount(), R.mipmap.ic_launcher, "test7");
-        gridView.addItem(gridView.getCount(), R.mipmap.ic_launcher, "test8");
+        /*
+        gridView.useAnimation(true);
+        gridView.setAddAnimation(R.anim.over_show);
+        gridView.setRemoveAnimation(R.anim.under_show);
+        gridView.setOverAnimation(R.anim.center_from_right);
+        gridView.setUnderAnimation(R.anim.left_from_center);
+        */
+        for(int i=0; i<100; i++) {
+            gridView.addItem(gridView.getCount(), R.mipmap.ic_launcher, "test"+i);
+        }
+
 
         PackHttpTask httpTask = new PackHttpTask("http://www.melon.com/1234123");
         try {
+            String data = httpTask.execute().get();
             Log.i("HTTP", httpTask.execute().get());
         }catch (Exception e){
             e.printStackTrace();
         }
-*/
+
     }
 }

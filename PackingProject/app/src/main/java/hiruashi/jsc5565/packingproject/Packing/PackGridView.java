@@ -4,14 +4,19 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 
 import java.util.ArrayList;
 
+import hiruashi.jsc5565.packingproject.R;
+import hiruashi.jsc5565.packingproject.util.AnimationUtil;
 import hiruashi.jsc5565.packingproject.util.PackListItem;
 import hiruashi.jsc5565.packingproject.util.ViewUtil;
 
@@ -26,7 +31,6 @@ public class PackGridView<T> extends GridView {
      */
     private Context context;
     private int layout=0;
-
     private GridAdapter adapter;
 
 
@@ -66,12 +70,20 @@ public class PackGridView<T> extends GridView {
 
 
     /**
-     * set matching both id and view.
+     * set id order
      * @param id
+     */
+    public void setIdOrder(int ...id){
+        adapter.setIdOrder(id);
+    }
+
+
+    /**
+     * set view order
      * @param view
      */
-    public void setIdMatch(int id, int view){
-        adapter.setIdMatch(id, view);
+    public void setViewOrder(int ...view){
+        adapter.setViewOrder(view);
     }
 
 
@@ -114,6 +126,34 @@ public class PackGridView<T> extends GridView {
         return adapter.getCount();
     }
 
+    /**********************************
+     *      setting animation
+     **********************************/
+/*
+    public void setAddAnimation(int ani){
+        adapter.setAddAnimation(ani);
+    }
+
+    public void setRemoveAnimation(int ani){
+        adapter.setRemoveAnimation(ani);
+    }
+
+    public void setOverAnimation(int ani){
+        adapter.setOverAnimation(ani);
+    }
+
+    public void setUnderAnimation(int ani){
+        adapter.setUnderAnimation(ani);
+    }
+
+
+    public void useAnimation(boolean use){
+        adapter.useAnimation(use);
+    }
+*/
+
+
+
 
     /************************************
      * GridView Adapter
@@ -128,7 +168,8 @@ public class PackGridView<T> extends GridView {
         private ArrayList<Integer> Layout_Id, View_Order; //id, view order
         private ArrayList<PackListItem> gridViewItems; // item arraylist
         private LayoutInflater inflater; // inflater
-
+        private AnimationUtil animationUtil;
+        private boolean useAnimation = false;
 
         /**
          * construtor
@@ -144,6 +185,7 @@ public class PackGridView<T> extends GridView {
             Layout_Id = new ArrayList<Integer>();
             View_Order = new ArrayList<Integer>();
             gridViewItems = new ArrayList<PackListItem>();
+            animationUtil = new AnimationUtil(this.context);
         }
 
         /**
@@ -194,6 +236,19 @@ public class PackGridView<T> extends GridView {
 
             View view = ViewUtil.getInstance().getView(this.context, position, convertView, parent, layout, inflater, gridViewItems, Layout_Id, View_Order);
 
+
+            /*
+            Log.i("position", position+", first position: "+getFirstVisiblePosition()+", last position: "+getLastVisiblePosition());
+            if(useAnimation){
+                Log.i("animation", "success");
+                animationUtil.ViewAnimation(view, position, getFirstVisiblePosition(), getLastVisiblePosition());
+            }
+            */
+            /*
+            Animation animation = AnimationUtils.loadAnimation(this.context, R.anim.over_show);
+            view.startAnimation(animation);
+            */
+
             return view;
         }
 
@@ -209,21 +264,30 @@ public class PackGridView<T> extends GridView {
 
 
         /**
-         * set matching both id and view.
-         *
+         * set id order
          * @param id
-         * @param view
          */
-        public void setIdMatch(int id, int view) {
+        public void setIdOrder(int ...id){
             if (Layout_Id == null) {
                 Layout_Id = new ArrayList<Integer>();
             }
+            for(int i: id) {
+                Layout_Id.add(i);
+            }
+        }
+
+
+        /**
+         * set view order
+         * @param view
+         */
+        public void setViewOrder(int ...view){
             if (View_Order == null) {
                 View_Order = new ArrayList<Integer>();
             }
-
-            Layout_Id.add(id);
-            View_Order.add(view);
+            for(int v: view) {
+                View_Order.add(v);
+            }
         }
 
         /**
@@ -246,6 +310,31 @@ public class PackGridView<T> extends GridView {
             gridViewItems.remove(index);
         }
 
+
+        /***************************************
+         *      setting animation
+         ***************************************/
+
+        public void setAddAnimation(int ani){
+            animationUtil.setAddAnimation(ani);
+        }
+
+        public void setRemoveAnimation(int ani){
+            animationUtil.setRemoveAnimation(ani);
+        }
+
+
+        public void setOverAnimation(int ani){
+            animationUtil.setOverAnimation(ani);
+        }
+
+        public void setUnderAnimation(int ani){
+            animationUtil.setUnderAnimation(ani);
+        }
+
+        public void useAnimation(boolean use){
+            this.useAnimation = use;
+        }
     }
 
 }
