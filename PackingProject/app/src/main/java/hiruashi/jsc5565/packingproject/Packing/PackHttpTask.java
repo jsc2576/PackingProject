@@ -1,5 +1,6 @@
 package hiruashi.jsc5565.packingproject.Packing;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -89,7 +90,7 @@ public class PackHttpTask extends AsyncTask<String, Void, String>{
      */
     private String HttpConnect() throws IOException{
         HttpURLConnection httpcon = (HttpURLConnection)url.openConnection();
-        SessionUtil sessionTask = new SessionUtil(this.getUrl());;
+        SessionUtil sessionTask = new SessionUtil(this.getUrl());
 
         /*
             httpconnection default setting
@@ -173,6 +174,18 @@ public class PackHttpTask extends AsyncTask<String, Void, String>{
         return result;
     }
 
+
+    public boolean ClearSession(Context context){
+        try {
+            SessionUtil sessionUtil = new SessionUtil(this.getUrl());
+            sessionUtil.ClearSession(context);
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
 
 
     /*********************************************

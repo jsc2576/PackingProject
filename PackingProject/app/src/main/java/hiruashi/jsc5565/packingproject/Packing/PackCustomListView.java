@@ -100,27 +100,27 @@ public class PackCustomListView<T> extends ListView {
      * set view order using static final int
      * @param v
      */
-    /*
+
     public void setViewOrder(int ... v){
         adapter.setViewOrder(v);
     }
-     */
+
 
 
     /**
      * set id order by id
      * @param id
      */
-    /*
+
     public void setIdOrder(int ... id){
         adapter.setIdOrder(id);
     }
-    */
 
+    /*
     public void setIdMatch(int id, int v){
         adapter.setIdMatch(id, v);
     }
-
+    */
     /**
      * set layout in adapter
      * @param layout
@@ -375,7 +375,7 @@ public class PackCustomListView<T> extends ListView {
          * @param v
          * @return
          */
-        /*
+
         public void setViewOrder(int ... v){
 
             if (View_Order == null) {
@@ -386,7 +386,7 @@ public class PackCustomListView<T> extends ListView {
                 View_Order.add(i);
             }
         }
-        */
+
 
 
         /**
@@ -394,7 +394,7 @@ public class PackCustomListView<T> extends ListView {
          * @param id
          * @return
          */
-        /*
+
         public void setIdOrder(int ... id){
             if(Layout_Id == null){
                 Layout_Id = new ArrayList<Integer>();
@@ -404,7 +404,7 @@ public class PackCustomListView<T> extends ListView {
                 Layout_Id.add(i);
             }
         }
-        */
+
 
 
         /**
@@ -412,6 +412,7 @@ public class PackCustomListView<T> extends ListView {
          * @param v
          * @param id
          */
+        /*
         public void setIdMatch(int id, int v){
             if(View_Order == null){
                 View_Order = new ArrayList<Integer>();
@@ -423,6 +424,7 @@ public class PackCustomListView<T> extends ListView {
             Layout_Id.add(id);
             View_Order.add(v);
         }
+        */
 
 
 

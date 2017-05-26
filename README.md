@@ -50,8 +50,8 @@ PackCustomListView
 	final PackCustomListView customListView = (PackCustomListView)findViewById(R.id.listview);
 
         customListView.setLayout(R.layout.list_item);
-        customListView.setIdMatch(R.id.list_img, IMAGE_RESOURCE);
-        customListView.setIdMatch(R.id.list_text, TEXT);
+	customListView.setIdOrder(R.id.list_img, R.id.list_text);
+	customListView.setViewOrder(IMAGE_RESOURCE, TEXT);
 
         customListView.setAddAniamtion(R.anim.over_show);
         customListView.setRemoveAnimation(R.anim.left_from_center, 400);
@@ -81,10 +81,10 @@ PackExpandableListView
         listview.setGroupLayout(R.layout.list_item);
         listview.setChildLayout(R.layout.list_item);
 
-        listview.setGroupIdMatch(R.id.list_img, IMAGE_RESOURCE);
-        listview.setGroupIdMatch(R.id.list_text, TEXT);
-        listview.setChildIdMatch(R.id.list_img, IMAGE_RESOURCE);
-        listview.setChildIdMatch(R.id.list_text, TEXT);
+	listview.setGroupIdOrder(R.id.list_img, R.id.list_text);
+	listview.setGroupViewOrder(IMAGE_RESOURCE, TEXT);
+	listview.setChildIdOrder(R.id.list_img, R.id.list_text);
+	listview.setChildViewOrder(IMAGE_RESOURCE, TEXT);
 
         /*
             input data
