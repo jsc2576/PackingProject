@@ -187,6 +187,13 @@ public class PackHttpTask extends AsyncTask<String, Void, String>{
         return true;
     }
 
+    /**
+     * If you want to keep seesion, input true.
+     * @param session
+     */
+    public void keepSession(boolean session){
+        this.SessionKeeping = session;
+    }
 
     /*********************************************
      *              set method

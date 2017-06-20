@@ -140,20 +140,56 @@ public class PackExpandableListView<T> extends ExpandableListView {
      * @param id
      * @param v
      */
-    public void setGroupIdMatch(int id, int v){
+    /*public void setGroupIdMatch(int id, int v){
         adapter.setGroupIdMatch(id, v);
     }
-
+    */
 
     /**
      * set child matching both id and view.
      * @param id
      * @param v
      */
-    public void setChildIdMatch(int id, int v){
+    /*public void setChildIdMatch(int id, int v){
         adapter.setChildIdMatch(id, v);
     }
+    */
 
+
+    /**
+     * set group id order
+     * @param id
+     */
+    public void setGroupIdOrder(int ...id){
+        adapter.setGroupIdOrder(id);
+    }
+
+
+    /**
+     * set group view order
+     * @param view
+     */
+    public void setGroupViewOrder(int ...view){
+        adapter.setGroupViewOrder(view);
+    }
+
+
+    /**
+     * set child id order
+     * @param id
+     */
+    public void setChildIdOrder(int ...id){
+        adapter.setChildIdOrder(id);
+    }
+
+
+    /**
+     * set child view order
+     * @param view
+     */
+    public void setChildViewOrder(int ...view){
+        adapter.setChildViewOrder(view);
+    }
 
 
 
@@ -436,10 +472,55 @@ public class PackExpandableListView<T> extends ExpandableListView {
 
 
         /**
+         * set group id order in adapter
+         * @param id
+         */
+        public void setGroupIdOrder(int ...id){
+            for(int i : id){
+                Group_Layout_Id.add(i);
+            }
+        }
+
+
+        /**
+         * set group view order in adapter
+         * @param view
+         */
+        public void setGroupViewOrder(int ...view){
+            for(int v : view){
+                Group_View_Order.add(v);
+            }
+        }
+
+
+        /**
+         * set child id order in adapter
+         * @param id
+         */
+        public void setChildIdOrder(int ...id){
+            for(int i : id){
+                Child_Layout_Id.add(i);
+            }
+        }
+
+
+        /**
+         * set child vview order in adapter
+         * @param view
+         */
+        public void setChildViewOrder(int ...view){
+            for(int v : view){
+                Child_View_Order.add(v);
+            }
+        }
+
+
+        /**
          * set group matching both id and view.
          * @param id
          * @param order
          */
+        /*
         public void setGroupIdMatch(int id, int order){
             if(Group_Layout_Id == null){
                 Group_Layout_Id = new ArrayList<Integer>();
@@ -449,7 +530,7 @@ public class PackExpandableListView<T> extends ExpandableListView {
             }
             Group_Layout_Id.add(id);
             Group_View_Order.add(order);
-        }
+        }*/
 
 
         /**
@@ -457,6 +538,7 @@ public class PackExpandableListView<T> extends ExpandableListView {
          * @param id
          * @param order
          */
+        /*
         public void setChildIdMatch(int id, int order){
             if(Child_Layout_Id == null){
                 Child_Layout_Id = new ArrayList<Integer>();
@@ -467,7 +549,7 @@ public class PackExpandableListView<T> extends ExpandableListView {
 
             Child_Layout_Id.add(id);
             Child_View_Order.add(order);
-        }
+        }*/
 
         /**
          * set group layout

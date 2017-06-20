@@ -142,7 +142,7 @@ public class PackCustomListView<T> extends ListView {
      */
     public void addItem(int index, T ... data){
 
-        final PackListItem item = new PackListItem(data);
+        PackListItem item = new PackListItem(data);
         adapter.addItem(index, item);
     }
 
