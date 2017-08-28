@@ -136,27 +136,6 @@ public class PackExpandableListView<T> extends ExpandableListView {
 
 
     /**
-     * set group matching both id and view.
-     * @param id
-     * @param v
-     */
-    /*public void setGroupIdMatch(int id, int v){
-        adapter.setGroupIdMatch(id, v);
-    }
-    */
-
-    /**
-     * set child matching both id and view.
-     * @param id
-     * @param v
-     */
-    /*public void setChildIdMatch(int id, int v){
-        adapter.setChildIdMatch(id, v);
-    }
-    */
-
-
-    /**
      * set group id order
      * @param id
      */
@@ -192,6 +171,10 @@ public class PackExpandableListView<T> extends ExpandableListView {
     }
 
 
+
+    public void setViewActionListener(ViewUtil.ViewActionListener viewActionListener){
+        adapter.setViewActionListener(viewActionListener);
+    }
 
 
     //================================================
@@ -298,9 +281,7 @@ public class PackExpandableListView<T> extends ExpandableListView {
         private ArrayList<Integer> Group_Layout_Id, Group_View_Order;
         private ArrayList<Integer> Child_Layout_Id, Child_View_Order;
         private int Group_Layout, Child_Layout;
-        private int childVisibleCount=0;
-        private int position=0;
-
+        private ViewUtil viewUtil;
 
 
 
@@ -314,6 +295,7 @@ public class PackExpandableListView<T> extends ExpandableListView {
          */
         PackExpandableAdpater(Context context, int Group_Layout, int Child_Layout){
             this.context = context;
+            this.viewUtil = new ViewUtil();
             this.inflater = LayoutInflater.from(this.context);
 
             this.GroupData = new ArrayList<>();
@@ -432,7 +414,7 @@ public class PackExpandableListView<T> extends ExpandableListView {
         @Override
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 
-            View view = ViewUtil.getInstance().getView(this.context, groupPosition, convertView, parent, Group_Layout, inflater, GroupData, Group_Layout_Id, Group_View_Order);
+            View view = viewUtil.getView(this.context, groupPosition, convertView, parent, Group_Layout, inflater, GroupData, Group_Layout_Id, Group_View_Order);
 
             return view;
         }
@@ -454,7 +436,7 @@ public class PackExpandableListView<T> extends ExpandableListView {
         @Override
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-            View view = ViewUtil.getInstance().getView(this.context, childPosition, convertView, parent, Child_Layout, inflater, GroupData.get(groupPosition).getChildList(), Child_Layout_Id, Child_View_Order);
+            View view = viewUtil.getView(this.context, childPosition, convertView, parent, Child_Layout, inflater, GroupData.get(groupPosition).getChildList(), Child_Layout_Id, Child_View_Order);
 
             Animation animation = AnimationUtils.loadAnimation(this.context, R.anim.over_show);
             startAnimation(animation);
@@ -515,41 +497,6 @@ public class PackExpandableListView<T> extends ExpandableListView {
         }
 
 
-        /**
-         * set group matching both id and view.
-         * @param id
-         * @param order
-         */
-        /*
-        public void setGroupIdMatch(int id, int order){
-            if(Group_Layout_Id == null){
-                Group_Layout_Id = new ArrayList<Integer>();
-            }
-            if(Group_View_Order == null){
-                Group_View_Order = new ArrayList<Integer>();
-            }
-            Group_Layout_Id.add(id);
-            Group_View_Order.add(order);
-        }*/
-
-
-        /**
-         * set child matching both id and view.
-         * @param id
-         * @param order
-         */
-        /*
-        public void setChildIdMatch(int id, int order){
-            if(Child_Layout_Id == null){
-                Child_Layout_Id = new ArrayList<Integer>();
-            }
-            if(Child_View_Order == null){
-                Child_View_Order = new ArrayList<Integer>();
-            }
-
-            Child_Layout_Id.add(id);
-            Child_View_Order.add(order);
-        }*/
 
         /**
          * set group layout
@@ -570,6 +517,9 @@ public class PackExpandableListView<T> extends ExpandableListView {
 
 
 
+        public void setViewActionListener(ViewUtil.ViewActionListener viewActionListener){
+            viewUtil.setViewActionListener(viewActionListener);
+        }
 
 
         //================================================
@@ -611,26 +561,6 @@ public class PackExpandableListView<T> extends ExpandableListView {
          */
         public void removeChildItem(final int GroupPosition, final int ChildPosition){
             GroupData.get(GroupPosition).getChildList().remove(ChildPosition);
-        }
-
-
-
-
-        /**
-         *
-         * @param groupPosition
-         */
-
-        @Override
-        public void onGroupExpanded(int groupPosition) {
-            super.onGroupExpanded(groupPosition);
-            childVisibleCount+=getChildrenCount(groupPosition);
-        }
-
-        @Override
-        public void onGroupCollapsed(int groupPosition) {
-            super.onGroupCollapsed(groupPosition);
-            childVisibleCount-=getChildrenCount(groupPosition);
         }
     }
 }

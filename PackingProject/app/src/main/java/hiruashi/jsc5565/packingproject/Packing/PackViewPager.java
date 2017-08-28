@@ -72,6 +72,21 @@ public class PackViewPager extends ViewPager{
     }
 
     /**
+     * add fragment title
+     * @param title
+     */
+    public void addFragmentTitles(String ...title){
+        adapter.addFragmentTitles(title);
+    }
+
+    public void addFragmentTitle(int position, String title){
+        adapter.addFragmentTitle(position, title);
+    }
+
+    public void setFragmentTitle(int position, String title){
+        adapter.setFragmentTitle(position, title);
+    }
+    /**
      * remove fragment1 by index
      * @param index
      */
@@ -88,7 +103,8 @@ public class PackViewPager extends ViewPager{
         /**
          * Fragment array
          */
-        List<Fragment> Fragment_List;
+        ArrayList<Fragment> Fragment_List;
+        ArrayList<String> Fragment_title;
 
         /**
          * constructor
@@ -98,8 +114,13 @@ public class PackViewPager extends ViewPager{
             super(fm);
 
             Fragment_List = new ArrayList<Fragment>();
+            Fragment_title = new ArrayList<String>();
         }
 
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return Fragment_title.get(position);
+        }
 
         /**
          * get fragment1
@@ -140,6 +161,25 @@ public class PackViewPager extends ViewPager{
             notifyDataSetChanged();
         }
 
+
+        /**
+         * add Fragment titles
+         * @param title
+         */
+        public void addFragmentTitles(String ...title){
+            for(String t : title){
+                Fragment_title.add(t);
+            }
+        }
+
+        public void addFragmentTitle(int position, String title){
+            Fragment_title.add(title);
+        }
+
+        public void setFragmentTitle(int position, String title){
+            Fragment_title.remove(position);
+            Fragment_title.add(position, title);
+        }
 
         /**
          * remove fragment1 item

@@ -126,6 +126,15 @@ public class PackGridView<T> extends GridView {
         return adapter.getCount();
     }
 
+
+    public void setViewActionListener(ViewUtil.ViewActionListener viewActionListener){
+        adapter.setViewActionListener(viewActionListener);
+    }
+
+    public void notifyDataSetChanged(){
+        adapter.notifyDataSetChanged();
+    }
+
     /**********************************
      *      setting animation
      **********************************/
@@ -170,6 +179,7 @@ public class PackGridView<T> extends GridView {
         private LayoutInflater inflater; // inflater
         private AnimationUtil animationUtil;
         private boolean useAnimation = false;
+        private ViewUtil viewUtil;
 
         /**
          * construtor
@@ -186,6 +196,7 @@ public class PackGridView<T> extends GridView {
             View_Order = new ArrayList<Integer>();
             gridViewItems = new ArrayList<PackListItem>();
             animationUtil = new AnimationUtil(this.context);
+            viewUtil = new ViewUtil();
         }
 
         /**
@@ -234,20 +245,7 @@ public class PackGridView<T> extends GridView {
         public View getView(int position, View convertView, ViewGroup parent) {
 
 
-            View view = ViewUtil.getInstance().getView(this.context, position, convertView, parent, layout, inflater, gridViewItems, Layout_Id, View_Order);
-
-
-            /*
-            Log.i("position", position+", first position: "+getFirstVisiblePosition()+", last position: "+getLastVisiblePosition());
-            if(useAnimation){
-                Log.i("animation", "success");
-                animationUtil.ViewAnimation(view, position, getFirstVisiblePosition(), getLastVisiblePosition());
-            }
-            */
-            /*
-            Animation animation = AnimationUtils.loadAnimation(this.context, R.anim.over_show);
-            view.startAnimation(animation);
-            */
+            View view = viewUtil.getView(this.context, position, convertView, parent, layout, inflater, gridViewItems, Layout_Id, View_Order);
 
             return view;
         }
@@ -311,6 +309,9 @@ public class PackGridView<T> extends GridView {
         }
 
 
+        public void setViewActionListener(ViewUtil.ViewActionListener viewActionListener){
+            viewUtil.setViewActionListener(viewActionListener);
+        }
         /***************************************
          *      setting animation
          ***************************************/

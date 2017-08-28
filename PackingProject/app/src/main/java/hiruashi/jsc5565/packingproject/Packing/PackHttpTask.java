@@ -26,7 +26,7 @@ public class PackHttpTask extends AsyncTask<String, Void, String>{
     /*
         variables
      */
-    private URL url;
+    private String url;
 
 
     private String requestMethod = "GET";
@@ -49,11 +49,7 @@ public class PackHttpTask extends AsyncTask<String, Void, String>{
      * @throws MalformedURLException
      */
     public PackHttpTask(String url){
-        try {
-            this.url = new URL(url);
-        }catch (MalformedURLException e){
-            e.printStackTrace();
-        }
+        this.url = url;
     }
 
 
@@ -64,15 +60,15 @@ public class PackHttpTask extends AsyncTask<String, Void, String>{
      * @param requestMethod
      * @throws MalformedURLException
      */
-    PackHttpTask(String url, String requestMethod) throws MalformedURLException{
+    PackHttpTask(String url, String requestMethod){
 
-        this.url = new URL(url);
+        this.url = url;
         this.requestMethod = requestMethod;
     }
 
 
-    PackHttpTask(String url, String requestMethod, String data) throws MalformedURLException{
-        this.url = new URL(url);
+    PackHttpTask(String url, String requestMethod, String data){
+        this.url = url;
         this.requestMethod = requestMethod;
         this.data = data;
     }
@@ -89,6 +85,7 @@ public class PackHttpTask extends AsyncTask<String, Void, String>{
      * @return
      */
     private String HttpConnect() throws IOException{
+        URL url = new URL(this.url);
         HttpURLConnection httpcon = (HttpURLConnection)url.openConnection();
         SessionUtil sessionTask = new SessionUtil(this.getUrl());
 
@@ -137,7 +134,6 @@ public class PackHttpTask extends AsyncTask<String, Void, String>{
      * @throws IOException
      */
     private HttpURLConnection HttpSend(HttpURLConnection httpcon) throws IOException{
-
         byte[] dataStream = data.getBytes(format);
         OutputStream outputStream = httpcon.getOutputStream();
 
@@ -204,8 +200,8 @@ public class PackHttpTask extends AsyncTask<String, Void, String>{
      * @param url
      * @throws MalformedURLException
      */
-    public void setUrl(String url) throws MalformedURLException{
-        this.url = new URL(url);
+    public void setUrl(String url){
+        this.url = url;
     }
 
 

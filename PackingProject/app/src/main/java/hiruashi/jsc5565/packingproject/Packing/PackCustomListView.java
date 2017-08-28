@@ -246,6 +246,9 @@ public class PackCustomListView<T> extends ListView {
     }
 
 
+    public void setViewActionListener(ViewUtil.ViewActionListener viewActionListener){
+        adapter.setViewActionListener(viewActionListener);
+    }
 
 
 
@@ -268,7 +271,7 @@ public class PackCustomListView<T> extends ListView {
         private int layout;
         private ArrayList<Integer> Layout_Id;
         private ArrayList<Integer> View_Order;
-
+        private ViewUtil viewUtil;
 
         //================================================
         //                  animation
@@ -288,7 +291,7 @@ public class PackCustomListView<T> extends ListView {
             listitem = new ArrayList<PackListItem>();
             inflater = LayoutInflater.from(this.context);
             this.layout = layout;
-
+            this.viewUtil = new ViewUtil();
             /*
                 animation values
              */
@@ -352,7 +355,7 @@ public class PackCustomListView<T> extends ListView {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            View view = ViewUtil.getInstance().getView(this.context,
+            View view = viewUtil.getView(this.context,
                     position, convertView, parent,
                     layout, inflater,
                     listitem, Layout_Id, View_Order);
@@ -405,26 +408,6 @@ public class PackCustomListView<T> extends ListView {
             }
         }
 
-
-
-        /**
-         * set matching both id and view.
-         * @param v
-         * @param id
-         */
-        /*
-        public void setIdMatch(int id, int v){
-            if(View_Order == null){
-                View_Order = new ArrayList<Integer>();
-            }
-            if(Layout_Id == null){
-                Layout_Id = new ArrayList<Integer>();
-            }
-
-            Layout_Id.add(id);
-            View_Order.add(v);
-        }
-        */
 
 
 
@@ -487,6 +470,9 @@ public class PackCustomListView<T> extends ListView {
         }
 
 
+        public void setViewActionListener(ViewUtil.ViewActionListener viewActionListener){
+            viewUtil.setViewActionListener(viewActionListener);
+        }
 
 
         //================================================

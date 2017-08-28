@@ -2,19 +2,15 @@ package hiruashi.jsc5565.packingproject.Packing;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import hiruashi.jsc5565.packingproject.R;
 import hiruashi.jsc5565.packingproject.util.PackListItem;
 import hiruashi.jsc5565.packingproject.util.ViewUtil;
 
@@ -27,9 +23,7 @@ public class PackRecyclerView<T> extends RecyclerView {
     /*
         recycler list data
      */
-    private int Layout;
     private PackRecyclerAdapter adapter;
-    private Context context;
 
     /**
      * constructor
@@ -55,9 +49,6 @@ public class PackRecyclerView<T> extends RecyclerView {
      * Initialize recycler view
      */
     private void Init(Context context){
-        Layout = 0;
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        this.setLayoutManager(mLayoutManager);
         adapter = new PackRecyclerAdapter(context);
         this.setAdapter(adapter);
         this.setFocusable(true);
@@ -98,7 +89,11 @@ public class PackRecyclerView<T> extends RecyclerView {
      * @param id
      */
     public void setIdOrder(int ... id){
-        adapter.setIdOrder(id);
+        ArrayList<Integer> arr = new ArrayList();
+        for(int i : id){
+            arr.add(i);
+        }
+        this.adapter.setIdOrder(arr);
     }
 
 
@@ -107,7 +102,11 @@ public class PackRecyclerView<T> extends RecyclerView {
      * @param view
      */
     public void setViewOrder(int ... view){
-        adapter.setView_Order(view);
+        ArrayList<Integer> arr = new ArrayList<>();
+        for(int v : view){
+            arr.add(v);
+        }
+        adapter.setView_Order(arr);
     }
 
 
@@ -120,6 +119,18 @@ public class PackRecyclerView<T> extends RecyclerView {
     }
 
 
+    /**
+     * get current position
+     * @return
+     */
+    public int getPosition(){
+        return adapter.getPosition();
+    }
+
+
+    public void setHolderActionListener(ViewUtil.HolderActionListner holderActionListener){
+        adapter.setHolderActionListener(holderActionListener);
+    }
 
     /**************************************************
      * pack recycler adapter
@@ -128,10 +139,11 @@ public class PackRecyclerView<T> extends RecyclerView {
         private ArrayList<Integer> Layout_Id;
         private ArrayList<Integer> View_Order;
         private ArrayList<PackListItem> RecyclerList;
+        private ArrayList<View> viewList;
         private int Layout;
         private Context context;
-
-
+        private int position;
+        private ViewUtil viewUtil;
 
         /****************************************
          * viewholder
@@ -173,6 +185,8 @@ public class PackRecyclerView<T> extends RecyclerView {
             RecyclerList = new ArrayList<PackListItem>();
             Layout_Id = new ArrayList<Integer>();
             View_Order = new ArrayList<Integer>();
+            viewList = new ArrayList<>();
+            viewUtil = new ViewUtil();
         }
 
 
@@ -185,15 +199,21 @@ public class PackRecyclerView<T> extends RecyclerView {
         }
 
 
+        public int getLayout(){
+            return this.Layout;
+        }
+
 
         /**
          * set id order
          * @param id
          */
-        public void setIdOrder(int ... id){
-            for(int i : id){
-                Layout_Id.add(i);
-            }
+        public void setIdOrder(ArrayList<Integer> id){
+            Layout_Id = id;
+        }
+
+        public ArrayList<Integer> getIdOrder(){
+            return Layout_Id;
         }
 
 
@@ -201,10 +221,12 @@ public class PackRecyclerView<T> extends RecyclerView {
          * set view order
          * @param view
          */
-        public void setView_Order(int ... view){
-            for(int v : view){
-                View_Order.add(v);
-            }
+        public void setView_Order(ArrayList<Integer> view){
+            View_Order = view;
+        }
+
+        public ArrayList<Integer> getView_Order(){
+            return View_Order;
         }
 
 
@@ -255,19 +277,12 @@ public class PackRecyclerView<T> extends RecyclerView {
          * @param position
          */
 
-        int lastposition=0;
         @Override
         public void onBindViewHolder(PackViewHolder holder, int position) {
 
-            ViewUtil.getInstance().RecyclerViewBind(context, holder, position, RecyclerList, Layout_Id, View_Order);
-
-
-            if(position > lastposition) {
-                Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.over_show);
-                holder.itemView.startAnimation(animation);
-
-                lastposition = position;
-            }
+            View view = viewUtil.RecyclerViewBind(context, holder, position, RecyclerList, Layout_Id, View_Order);
+            viewList.add(view);
+            this.position = position;
         }
 
 
@@ -282,6 +297,19 @@ public class PackRecyclerView<T> extends RecyclerView {
             return RecyclerList.size();
         }
 
+
+        /**
+         * get now position
+         * @return
+         */
+        public int getPosition(){
+            return this.position;
+        }
+
+
+        public void setHolderActionListener(ViewUtil.HolderActionListner holderActionListener){
+            viewUtil.setHolderActionListner(holderActionListener);
+        }
     }
 
 }
