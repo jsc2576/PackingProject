@@ -19,6 +19,23 @@ packing ETC 기능
  - PackViewPager
 
 
+//===================listview 에서 vieworder함수에서 쓸 수 있는 리스트입니다 =======================//
+
+ViewUtil 내부 변수
+
+    public static final int TEXT = 0;
+    public static final int IMAGE_RESOURCE = 1;
+    public static final int IMAGE_URI = 2;
+    public static final int IMAGE_ASSETS = 3;
+    public static final int BITMAP = 4;
+    public static final int BUTTON = 5;
+    public static final int IMAGEBUTTON = 6;
+    public static final int SWITCH = 7;
+    public static final int RADIOBUTTON = 8;
+
+//==========================================================================================//
+
+
 
 PackListView
 
@@ -87,7 +104,7 @@ Example
 
 	customListView.setLayout(R.layout.list_item);
 	customListView.setIdOrder(R.id.list_img, R.id.list_text);
-	customListView.setViewOrder(IMAGE_RESOURCE, TEXT);
+	customListView.setViewOrder(ViewUtil.IMAGE_RESOURCE, ViewUtil.TEXT);
 
 	customListView.setAddAniamtion(R.anim.over_show);
 	customListView.setRemoveAnimation(R.anim.left_from_center, 400);
@@ -135,9 +152,9 @@ Example
 	listview.setChildLayout(R.layout.list_item);
 
 	listview.setGroupIdOrder(R.id.list_img, R.id.list_text);
-	listview.setGroupViewOrder(IMAGE_RESOURCE, TEXT);
+	listview.setGroupViewOrder(ViewUtil.IMAGE_RESOURCE, ViewUtil.TEXT);
 	listview.setChildIdOrder(R.id.list_img, R.id.list_text);
-	listview.setChildViewOrder(IMAGE_RESOURCE, TEXT);
+	listview.setChildViewOrder(ViewUtil.IMAGE_RESOURCE, ViewUtil.TEXT);
 
 	/*
 	    input data
@@ -173,7 +190,7 @@ Example
 	PackRecyclerView recylerView = new PackRecyclerView(this);
 
 	recylerView.setLayout(R.layout.list_item);
-	recylerView.setViewOrder(IMAGE_RESOURCE, TEXT);
+	recylerView.setViewOrder(ViewUtil.IMAGE_RESOURCE, ViewUtil.TEXT);
 	recylerView.setIdOrder(R.id.list_img, R.id.list_text);
 
 	/*
@@ -209,7 +226,7 @@ PackGridView
 	PackGridView gridView = new PackGridView(this);
 
 	gridView.setLayout(R.layout.list_item);
-	gridView.setViewOrder(IMAGE_RESOURCE, TEXT);
+	gridView.setViewOrder(ViewUtil.IMAGE_RESOURCE, ViewUtil.TEXT);
 	gridView.setIdOrder(R.id.list_img, R.id.list_text);
 
 	for(int i=0; i<100; i++) {
