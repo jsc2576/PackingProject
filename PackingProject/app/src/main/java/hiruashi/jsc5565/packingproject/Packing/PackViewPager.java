@@ -67,9 +67,19 @@ public class PackViewPager extends ViewPager{
             adapter.addFragment(f);
     }
 
+
     public void addFragment(int position, Fragment fm){
         adapter.addFragment(position, fm);
     }
+
+    /**
+     * remove fragment1 by index
+     * @param index
+     */
+    public void removeFragment(int index){
+        adapter.removeFragment(index);
+    }
+
 
     /**
      * add fragment title
@@ -86,12 +96,9 @@ public class PackViewPager extends ViewPager{
     public void setFragmentTitle(int position, String title){
         adapter.setFragmentTitle(position, title);
     }
-    /**
-     * remove fragment1 by index
-     * @param index
-     */
-    public void removeFragment(int index){
-        adapter.removeFragment(index);
+
+    public void removeFragmentTitle(int position){
+        adapter.removeFragmentTitle(position);
     }
 
 
@@ -179,6 +186,10 @@ public class PackViewPager extends ViewPager{
         public void setFragmentTitle(int position, String title){
             Fragment_title.remove(position);
             Fragment_title.add(position, title);
+        }
+
+        public void removeFragmentTitle(int position){
+            Fragment_title.remove(position);
         }
 
         /**

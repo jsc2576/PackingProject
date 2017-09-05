@@ -246,10 +246,6 @@ public class PackCustomListView<T> extends ListView {
     }
 
 
-    public void setViewActionListener(ViewUtil.ViewActionListener viewActionListener){
-        adapter.setViewActionListener(viewActionListener);
-    }
-
 
 
 
@@ -469,10 +465,6 @@ public class PackCustomListView<T> extends ListView {
             }, remove_duration);
         }
 
-
-        public void setViewActionListener(ViewUtil.ViewActionListener viewActionListener){
-            viewUtil.setViewActionListener(viewActionListener);
-        }
 
 
         //================================================

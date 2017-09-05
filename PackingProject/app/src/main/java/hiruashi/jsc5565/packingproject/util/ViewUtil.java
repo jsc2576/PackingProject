@@ -43,7 +43,6 @@ public class ViewUtil<T extends PackListItem> {
     public static final int RADIOBUTTON = 8;
 
     private HolderActionListner holderActionListner;
-    private ViewActionListener viewActionListener;
 
     /**
      * conduct to bind view and data.
@@ -240,13 +239,6 @@ public class ViewUtil<T extends PackListItem> {
             }
         }
 
-        if(this.viewActionListener != null){
-            try{
-                viewActionListener.getChildView(view, position);
-            }catch (NullPointerException e){
-                e.printStackTrace();
-            }
-        }
         return view;
     }
 
@@ -263,21 +255,12 @@ public class ViewUtil<T extends PackListItem> {
      * set holder action in recyclerview
      * @param holderActionListner
      */
-    public void setHolderActionListner(HolderActionListner holderActionListner){
+    public void setHolderActionListener(HolderActionListner holderActionListner){
         this.holderActionListner = holderActionListner;
     }
 
 
-    /**
-     * set view action except recyclerview
-     */
-    public interface ViewActionListener{
-        public void getChildView(View view, int position);
-    }
 
-    public void setViewActionListener(ViewActionListener viewActionListener){
-        this.viewActionListener = viewActionListener;
-    }
 
 
     /**

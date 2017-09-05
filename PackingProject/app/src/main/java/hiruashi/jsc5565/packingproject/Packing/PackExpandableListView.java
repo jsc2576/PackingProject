@@ -172,9 +172,6 @@ public class PackExpandableListView<T> extends ExpandableListView {
 
 
 
-    public void setViewActionListener(ViewUtil.ViewActionListener viewActionListener){
-        adapter.setViewActionListener(viewActionListener);
-    }
 
 
     //================================================
@@ -515,11 +512,6 @@ public class PackExpandableListView<T> extends ExpandableListView {
             this.Child_Layout = Child_Layout;
         }
 
-
-
-        public void setViewActionListener(ViewUtil.ViewActionListener viewActionListener){
-            viewUtil.setViewActionListener(viewActionListener);
-        }
 
 
         //================================================

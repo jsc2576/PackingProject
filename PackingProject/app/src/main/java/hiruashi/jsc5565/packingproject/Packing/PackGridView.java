@@ -127,10 +127,6 @@ public class PackGridView<T> extends GridView {
     }
 
 
-    public void setViewActionListener(ViewUtil.ViewActionListener viewActionListener){
-        adapter.setViewActionListener(viewActionListener);
-    }
-
     public void notifyDataSetChanged(){
         adapter.notifyDataSetChanged();
     }
@@ -308,10 +304,6 @@ public class PackGridView<T> extends GridView {
             gridViewItems.remove(index);
         }
 
-
-        public void setViewActionListener(ViewUtil.ViewActionListener viewActionListener){
-            viewUtil.setViewActionListener(viewActionListener);
-        }
         /***************************************
          *      setting animation
          ***************************************/

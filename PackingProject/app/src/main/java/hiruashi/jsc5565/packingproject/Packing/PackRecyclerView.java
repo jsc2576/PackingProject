@@ -308,7 +308,7 @@ public class PackRecyclerView<T> extends RecyclerView {
 
 
         public void setHolderActionListener(ViewUtil.HolderActionListner holderActionListener){
-            viewUtil.setHolderActionListner(holderActionListener);
+            viewUtil.setHolderActionListener(holderActionListener);
         }
     }
 

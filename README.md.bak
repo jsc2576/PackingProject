@@ -308,7 +308,7 @@ PackViewPager
 
 
 
-// ====tablayout과 연동==== //
+// tablayout과 연동
 
         tabLayout = (TabLayout)findViewById(R.id.tab_layout);
         viewPager = (PackViewPager)findViewById(R.id.viewpager);
